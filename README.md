@@ -25,7 +25,7 @@ The goal was to understand how to create virtual machines with different respons
 
 ## Azure Constraints And Design
 
-![Topology](images/VMs Azure.png)
+![VMs Azure](images/vms-azure.png)
 
 Because the lab was created using a **Student Free Tier** account, public IP addresses were limited. That constraint shaped the architecture and became part of the learning experience.
 
