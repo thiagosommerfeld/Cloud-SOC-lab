@@ -1,4 +1,4 @@
-# Azure Cloud Security Architecture: Network, SIEM Deployment & Threat Detection
+# Azure Cloud Architecture, Network, SIEM Deployment & Threat Detection
 
 ## Project Overview
 
