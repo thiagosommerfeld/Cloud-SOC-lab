@@ -10,6 +10,8 @@ Instead of studying cloud security only in theory, I used Azure to practice how 
 
 ## What I Built
 
+![Topology](images/topology.png)
+
 The lab was built to simulate a small enterprise environment with different machine roles and functions:
 
 - a **Windows Server Domain Controller** for Active Directory.
@@ -22,6 +24,8 @@ The goal was to understand how to create virtual machines with different respons
 ---
 
 ## Azure Constraints And Design
+
+![Topology](images/VMs Azure.png)
 
 Because the lab was created using a **Student Free Tier** account, public IP addresses were limited. That constraint shaped the architecture and became part of the learning experience.
 
