@@ -6,6 +6,8 @@ This project was designed as a hands-on cloud security training lab inside Micro
 
 Instead of studying cloud security only in theory, I used Azure to practice how different systems can be deployed, isolated, connected, and monitored in a controlled environment. This made the project useful both as a cloud learning exercise and as a security validation lab.
 
+**Disclaimer:** This project was initially designed around Splunk, but due to VM resource limitations in the Azure free/student tier, Wazuh was used as the SIEM solution for the final implementation.
+
 ---
 
 ## What I Built
