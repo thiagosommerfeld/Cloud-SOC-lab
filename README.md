@@ -10,7 +10,7 @@ Instead of studying cloud security only in theory, I used Azure to practice how 
 
 ---
 
-## What I Built
+## Environment Architecture
 
 ![Topology](images/topology.png)
 
@@ -19,20 +19,20 @@ The lab was built to simulate a small enterprise environment with different mach
 - a **Windows Server Domain Controller** for Active Directory.
 - a **Windows 10 workstation** for user interaction and authentication testing.
 - an **Ubuntu Server** used as the **Wazuh SIEM Manager**.
-- a **Kali Linux machine** used from a separate network zone for offensive testing.
+- a **Kali Linux machine** used in a segregated network zone for controlled security testing.
 
 The goal was to understand how to create virtual machines with different responsibilities and interconnect them securely inside a cloud network. I also wanted to validate what happens when a machine from another zone, such as Kali, tries to reach internal corporate assets.
 
 ---
 
-## Azure Constraints And Design
+## Cloud Architecture Constraints
 
 ![VMs Azure](images/vms-azure.png)
 
 Because the lab was created using a **Student Free Tier** account, public IP addresses were limited. That constraint shaped the architecture and became part of the learning experience.
 
 - The **Domain Controller** had only a private IP: `192.168.10.7`.
-- The **Windows 10** machine had a public IP and a private IP: `192.168.10.6`.
+- The **Windows 10** was configured with both public and private connectivity for remote administration and testing purposes.`.
 - The **Kali Linux** machine was placed in a separate network because of the account limitations.
 - The **Ubuntu/Wazuh server** was accessed internally and used as the Wazuh SIEM collection point.
 
@@ -58,7 +58,9 @@ This setup helped me understand how cloud administration changes depending on th
 
 After the infrastructure was deployed, I added monitoring and attack simulation to validate the environment.
 
-I installed **Wazuh** on the Ubuntu server to centralize logs from the Windows machines, and I used **Sysmon** on the Domain Controller to capture detailed endpoint telemetry. This allowed me to observe authentication events, process creation, PowerShell activity, and suspicious commands in a single dashboard.
+I installed **Wazuh** on the Ubuntu server to centralize logs from the Windows machines, The Wazuh dashboard was accessed via **HTTPS over port 443**, providing secure encrypted access for log analysis and threat monitoring.
+
+I used **Sysmon** on the Domain Controller to capture detailed endpoint telemetry. This allowed me to observe authentication events, process creation, PowerShell activity, and suspicious commands in a single dashboard.
 
 To test the detection pipeline, I ran controlled offensive simulations using **Hydra** and **Atomic Red Team**. These tests generated events such as failed logons, successful RDP sessions, suspicious PowerShell execution, and local user creation.
 
@@ -68,16 +70,27 @@ To test the detection pipeline, I ran controlled offensive simulations using **H
 
 This project taught me several important lessons about cloud security and infrastructure design:
 
-- how to build and connect virtual machines with different roles inside Azure.
-- how to work around public IP limitations in a student cloud account.
-- how VNet Peering can be used to connect isolated zones securely.
-- how to access private systems using Azure Bastion.
-- how to separate administrative access by protocol, using Bastion, SSH, and RDP depending on the target system.
-- how to collect and correlate logs in Wazuh.
-- how to validate whether detections are working by generating real telemetry.
-- how to distinguish normal cloud noise from malicious activity during threat hunting.
+- building and connecting virtual machines with different roles inside Azure.
+- working around public IP limitations in a student cloud account.
+- securely connecting isolated networks using VNet Peering.
+- accessing private systems through Azure Bastion.
+- separating administration protocols between Bastion, SSH, and RDP.
+- collecting and correlating logs in Wazuh.
+- validating detections through real telemetry generation.
+- distinguishing normal cloud activity from suspicious behavior during threat hunting.
 
 The biggest takeaway was that cloud security is not only about deploying machines, but also about designing the network, controlling access, and making sure the environment is observable.
+
+---
+
+## Key Security Outcomes
+
+- Successfully centralized Windows and Sysmon telemetry into Wazuh.
+- Validated RDP brute-force detection using Windows Event ID 4625.
+- Confirmed successful RDP compromise detection through Event ID 4624.
+- Simulated MITRE ATT&CK techniques using Atomic Red Team.
+- Secured internal infrastructure through Bastion-only administrative access.
+- Implemented segmented networking using Azure VNet Peering.
 
 ---
 
